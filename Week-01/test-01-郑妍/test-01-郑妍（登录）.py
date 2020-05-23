@@ -20,3 +20,4 @@ while True:
                 break
     else:
         print("用户名不存在")
+        i = i + 1

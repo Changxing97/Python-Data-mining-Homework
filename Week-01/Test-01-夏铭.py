@@ -1,5 +1,6 @@
 name="abc"
 password="123"
+
 for i in range(3):
     name_input=input('请输入你的账号：')
     password_input=input('请输入你的密码：')

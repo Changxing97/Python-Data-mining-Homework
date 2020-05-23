@@ -39,7 +39,7 @@ def match(List, text, n, x):  # 集合 文本 大于等于n个保留x个
 
 
 # 修改连续文字的写法
-def matchChinese(text, n, x):  # 文本 大于等于n个保留x个
+def match_chinese(text, n, x):  # 文本 大于等于n个保留x个
     cnt = 1
     pre = text[0]
     ans = pre

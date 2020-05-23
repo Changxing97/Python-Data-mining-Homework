@@ -117,8 +117,5 @@ for i in list8:
 correct_barrage = str('\n'.join(list9))
 
 
-
-
-
 with open("萝莉弹幕.txt", "w",encoding='utf-8') as f:
     f.write(correct_barrage)

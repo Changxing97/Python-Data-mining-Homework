@@ -8,9 +8,9 @@ if __name__ == "__main__":
         usr = input('enter username:')
         password = input('enter password:')
         if usr == init_usrname and password == init_password:
-                    print('登陆成功!')
-                    flag1 = 1
-                    break
+            print('登陆成功!')
+            flag1 = 1
+            break
         else:
             flag0 += 1
         if flag0 <= 2:
