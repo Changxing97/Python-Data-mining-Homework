@@ -1,24 +1,33 @@
 import itertools
-import random
 
-cardNum = []    # 存放随机牌组
-listSet = []    # 存放随机牌组对
+cardNum = []  # 存放随机牌组
+listSet = []  # 存放随机牌组对
 cardGroup = ()  # 调用牌组
-symbols = ["+","-","*","/"]  #存放运算符
-cardOne = 0 ; cardTwo = 0 ; cardThr = 0 ;cardFor = 0    # 存放卡牌信息
-resultOne = 0 ; resultTwo = 0 ; resultThr = 0   # 存放运算计算结果
+symbols = ["+", "-", "*", "/","--","//"]  # 存放运算符
+cardOne = 0;
+cardTwo = 0;
+cardThr = 0;
+cardFor = 0  # 存放卡牌信息
+resultOne = 0;
+resultTwo = 0;
+resultThr = 0  # 存放运算计算结果
 cardValue = []  # 保存结果打印信息
-cardResult = []   #存放运算结果
+cardResult = []  # 存放运算结果
+
 
 # 发牌器
 def cardFun():
-    for i in range(4):
-        cardNum.append(int(random.random() * 100 % 13) + 1)
+    # for i in range(4):
+    #     cardNum.append(int(random.random() * 100 % 13) + 1)
+    cardNum = [3, 3, 8, 8]
     listSet = list(set(itertools.permutations(cardNum, 4)))
-    return listSet         # 存放A(4,4)种排列方式的列表
+    return listSet  # 存放A(4,4)种排列方式的列表
+
 
 # 计算方法
-cardList = cardFun()     #将生成的四张牌所有排列顺序放入cardList中
+cardList = cardFun()  # 将生成的四张牌所有排列顺序放入cardList中
+
+
 def cardCompute():
     for i in range(len(cardList)):
         cardGroup = cardList[i]
@@ -39,6 +48,10 @@ def cardCompute():
                     resultOne = cardOne * cardTwo
                 elif s1 == "/":
                     resultOne = cardOne / cardTwo
+                elif s1 == "--":
+                    resultOne = cardTwo - cardOne
+                elif s1 == "//":
+                    resultOne = cardTwo / cardOne
                 for s2 in symbols:
                     resultTwo = 0
                     if s2 == "+":
@@ -49,8 +62,13 @@ def cardCompute():
                         resultTwo = resultOne * cardThr
                     elif s2 == "/":
                         resultTwo = resultOne / cardThr
+                    elif s2 == "--":
+                        resultTwo = cardThr - resultOne
+                    elif s2 == "//":
+                        resultTwo = cardThr / resultOne
                     for s3 in symbols:
-                        resultThr =0 ; resultelse = 0
+                        resultThr = 0;
+                        resultelse = 0
                         if s3 == "+":
                             resultThr = resultTwo + cardFor
                             resultelse = cardThr + cardFor
@@ -63,10 +81,17 @@ def cardCompute():
                         elif s3 == "/":
                             resultThr = resultTwo / cardFor
                             resultelse = cardThr / cardFor
+                        elif s3 == "--":
+                            resultThr = cardFor - resultTwo
+                            resultelse = cardFor - cardThr
+                        elif s3 == "//":
+                            resultThr = cardFor / resultTwo
+                            resultelse = cardFor / cardThr
 
                         # 判断最终结果是否为24
-                        if resultThr == 24:
-                            cardValue.append("((%s %s %s) %s %s ) %s %s = 24" % (cardOne,s1,cardTwo,s2,cardThr,s3,cardFor))
+                        if round(resultThr,3) == 24:
+                            cardValue.append(
+                                "((%s %s %s) %s %s ) %s %s = 24" % (cardOne, s1, cardTwo, s2, cardThr, s3, cardFor))
                             flag = True
                         # 括号与括号的运算
                         elif resultThr != 24 and 24 % resultOne == 0:
@@ -80,12 +105,17 @@ def cardCompute():
                                     resultThr = resultOne * resultelse
                                 elif s4 == "/":
                                     resultThr = resultOne / resultelse
-                                if resultThr == 24:
-                                    cardValue.append("(%s %s %s) %s (%s %s %s) = 24" % (cardOne,s1,cardTwo,s4,cardThr,s3,cardFor))
+                                elif s4 == "--":
+                                    resultTwo = resultelse - resultOne
+                                elif s4 == "//":
+                                    resultTwo = resultelse / resultOne
+                                if round(resultThr,3) == 24:
+                                    cardValue.append("(%s %s %s) %s (%s %s %s) = 24" % (
+                                    cardOne, s1, cardTwo, s4, cardThr, s3, cardFor))
                                     flag = True
                                 if flag:
                                     break
-                    # 如果得到结果，就退出3次运算的循环
+                        # 如果得到结果，就退出3次运算的循环
                         if flag:
                             break
                     if flag:
@@ -98,10 +128,11 @@ def cardCompute():
     cardResult = set(cardValue)
     return cardResult
 
+
 # 执行主体
 if __name__ == "__main__":
     Compute = cardCompute()
-    print("你手上的卡牌为：%s %s %s %s" % (cardList[0][0],cardList[0][1],cardList[0][2],cardList[0][3]))
+    print("你手上的卡牌为：%s %s %s %s" % (cardList[0][0], cardList[0][1], cardList[0][2], cardList[0][3]))
     print("这组卡牌共有 %s 种算法" % (len(Compute)))
     print("---" * 10)
     for i in Compute:

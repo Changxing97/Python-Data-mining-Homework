@@ -20,6 +20,7 @@ card_value = []  # 保存结果打印信息
 def card_send():
     for i in range(4):
         card_num.append(int(random.random() * 100 % 13) + 1)  # （0—1）* 100变成0—100的数，与13取余以后取整变成0—12，加一变成0—13即扑克牌数字
+    # card_num = [3, 3, 8, 8]
     list_set = list(set(itertools.permutations(card_num, 4)))  # 返回四张卡牌的所有数学全排列方式
     return list_set  # 存放排列方式的列表
 
